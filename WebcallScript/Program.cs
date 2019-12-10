@@ -15,8 +15,8 @@ static void Main(string[] args)
         {
             string filePath = @"C:\Users\Public\RailwayTraffic\";
             string baseURL = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
-            string departureStation = "HKI/";
-            string arrivalStation = "TPE?endDate=";
+            string departureStation = "HKI";
+            string arrivalStation = "TPE";
             string includeNonstop = "&include_nonstopping=FALSE";
             DateTime startTime = new DateTime(2019, 12, 01, 00, 00, 00);
             DateTime endTime = new DateTime(2019, 12, 10, 00, 00, 00);
@@ -25,8 +25,7 @@ static void Main(string[] args)
             DownloadTraindata(filePath, baseURL, departureStation, arrivalStation, includeNonstop, startTime, endTime);
 
         }
-        //https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?endDate=2019-12-01T23%3A59%3A59.000Z&include_nonstopping=FALSE&startDate=2019-12-01T00%3A00%3A00.000Z
-        //https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?endDate=2019-12-03T23%3A59%3A59.000Z&include_nonstopping=false&startDate=2019-12-01T00%3A00%3A00.000Z
+
         //API call to get trains between stations
         static void DownloadTraindata(string filePath, string baseURL, string departureStation, string arrivalStation
             , string includeNonstop, DateTime startTime, DateTime endTime)
@@ -50,7 +49,10 @@ static void Main(string[] args)
                 var eoDayTimeUTC = DateTime.SpecifyKind(eoDayTime, DateTimeKind.Utc)
                     .ToString("yyyy-MM-dd'T'HH:mm:ss.fffK", CultureInfo.InvariantCulture);
 
-                //Build string
+
+                var urltest = $"{baseURL}{departureStation}/{arrivalStation}?endDate=\"{ eoDayTimeUTC.Replace(":", "%3A")}{includeNonstop}&startDate={startDateUTC.Replace(":", "%3A")}";
+                
+                    //Build string
                 var url = baseURL + departureStation + arrivalStation + eoDayTimeUTC.Replace(":", "%3A")
                     + includeNonstop + "&startDate=" + startDateUTC.Replace(":", "%3A");
                 var request = (HttpWebRequest)WebRequest.Create(url);
