@@ -13,6 +13,9 @@ namespace WebcallScript
     {
 static void Main(string[] args)
         {
+            //https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?endDate=2019-12-10T23%3A59%3A59.000Z&include_nonstopping=false&startDate=2019-12-01T00%3A00%3A00.000Z
+            
+
             string filePath = @"C:\Users\Public\RailwayTraffic\";
             string baseURL = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
             string departureStation = "HKI";
@@ -50,11 +53,9 @@ static void Main(string[] args)
                     .ToString("yyyy-MM-dd'T'HH:mm:ss.fffK", CultureInfo.InvariantCulture);
 
 
-                var urltest = $"{baseURL}{departureStation}/{arrivalStation}?endDate=\"{ eoDayTimeUTC.Replace(":", "%3A")}{includeNonstop}&startDate={startDateUTC.Replace(":", "%3A")}";
-                
-                    //Build string
-                var url = baseURL + departureStation + arrivalStation + eoDayTimeUTC.Replace(":", "%3A")
-                    + includeNonstop + "&startDate=" + startDateUTC.Replace(":", "%3A");
+
+                //Build string
+                var url = $"{baseURL}{departureStation}/{arrivalStation}?endDate={ eoDayTimeUTC.Replace(":", "%3A")}{includeNonstop}&startDate={startDateUTC.Replace(":", "%3A")}";
                 var request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Method = "GET";
@@ -76,7 +77,7 @@ static void Main(string[] args)
 
 
                 File.WriteAllText(filePath + fileName + startTime.ToString("yyyy-MM-dd") + ".json", content);
-
+                Console.WriteLine(url);
                 startTime = startTime.AddDays(1);
             }
 
