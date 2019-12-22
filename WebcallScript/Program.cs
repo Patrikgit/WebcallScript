@@ -40,7 +40,7 @@ static void Main(string[] args)
 
 
             //Loop through all the dates and write each day json content to it's own file
-            while (startTime < endTime)
+            while (startTime <= endTime)
             {
 
                 eoDayTime = startTime.AddHours(23).AddMinutes(59).AddSeconds(59);
