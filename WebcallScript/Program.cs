@@ -77,7 +77,7 @@ static void Main(string[] args)
 
 
                 File.WriteAllText(filePath + fileName + startTime.ToString("yyyy-MM-dd") + ".json", content);
-                Console.WriteLine(url);
+                Console.WriteLine(filePath + fileName + startTime.ToString("yyyy-MM-dd") + ".json");
                 startTime = startTime.AddDays(1);
             }
 
